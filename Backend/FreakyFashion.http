@@ -24,3 +24,15 @@ Content-Type: application/json
     "Image": "/images/t-shirt.png",
     "CategoryId": 1
 }
+
+### Create without body
+POST {{FreakyFashion_HostAddress}}/api/Products/
+Accept: application/json
+Content-Type: application/json
+{
+
+}
+
+### Delete product
+DELETE {{FreakyFashion_HostAddress}}/api/Products/6
+Accept: application/json

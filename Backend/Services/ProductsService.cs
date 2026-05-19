@@ -41,16 +41,24 @@ namespace FreakyFashion.Services
             return Task.FromResult(response);
         }
 
-        public Task<bool> DeleteProduct(int id)
+        public async Task<bool> DeleteProduct(int id)
         {
-            throw new NotImplementedException();
+            var product = products.FirstOrDefault(p => p.Id == id);
+
+            if (product == null)
+                return false;
+
+            products.Remove(product);
+
+            return true;
         }
 
         public async Task<ProductsDTO?> GetProductById(int id)
         {
             var product = products.FirstOrDefault(p => p.Id == id);
 
-            if (product == null) return null;
+            if (product == null)
+                return null;
 
             var productDTO = new ProductsDTO(
                 Id: product.Id,

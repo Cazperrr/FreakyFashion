@@ -24,7 +24,7 @@ namespace FreakyFashion.Controllers
             var product = await service.GetProductById(id);
 
             if (product == null)
-                return NotFound($"Product with ID {id} not found.");
+                return NotFound();
 
             return Ok(product);
         }
@@ -50,6 +50,17 @@ namespace FreakyFashion.Controllers
                 new { id = createdProduct.Id },
                 createdProduct
                 );
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var result = await service.DeleteProduct(id);
+
+            if (result == false)
+                return NotFound();
+
+            return NoContent();
         }
     }
 }
