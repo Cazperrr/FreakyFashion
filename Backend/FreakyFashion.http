@@ -1,6 +1,26 @@
-@FreakyFashion_HostAddress = http://localhost:5149
+@FreakyFashion_HostAddress = https://localhost:8000
 
-GET {{FreakyFashion_HostAddress}}/weatherforecast/
+### Get all products
+GET {{FreakyFashion_HostAddress}}/api/Products/
 Accept: application/json
 
-###
+### Get product by Id
+GET {{FreakyFashion_HostAddress}}/api/Products/1
+Accept: application/json
+
+### Get product by slug
+GET {{FreakyFashion_HostAddress}}/api/Products/slug=t-shirt
+Accept: application/json
+
+### Create a new product
+POST {{FreakyFashion_HostAddress}}/api/Products/
+Accept: application/json
+Content-Type: application/json
+{
+    "name": "T-Shirt",
+    "Urlslug": "t-shirt",
+    "Description": "Lorem ipsum dolor",
+    "Price": 199,
+    "Image": "/images/t-shirt.png",
+    "CategoryId": 1
+}
