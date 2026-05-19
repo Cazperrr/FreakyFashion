@@ -1,13 +1,13 @@
-﻿using FreakyFashion.Models;
+﻿using FreakyFashion.DTOs;
 
 namespace FreakyFashion.Services.Interfaces
 {
     public interface IProductsService
     {
-        Task<List<Products>> GetProducts();
-        Task<Products?> GetProductById(int id);
-        Task<Products?> GetProductBySlug(string slug);
-        Task<Products> CreateProduct(Products product);
+        Task<List<ProductsDTO>> GetProducts();
+        Task<ProductsDTO?> GetProductById(int id);
+        Task<List<ProductsDTO>> GetProductBySlug(string slug);
+        Task<ProductsDTO> CreateProduct(CreateProductDTO product);
         Task<bool> DeleteProduct(int id);
     }
 }
