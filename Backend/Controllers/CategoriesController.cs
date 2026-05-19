@@ -7,5 +7,6 @@ namespace FreakyFashion.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
+        //TEST
     }
 }
