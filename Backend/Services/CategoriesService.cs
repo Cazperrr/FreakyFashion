@@ -63,14 +63,38 @@ namespace FreakyFashion.Services
             return await Task.FromResult(categoryDto);
         }
 
-        public Task<CategoriesDTO> CreateCategory(CategoriesDTO category)
+        public async Task<CategoriesDTO> CreateCategory(CreateCategoryDTO category)
         {
-            throw new NotImplementedException();
+            // TODO: Change for database implementation
+            var newCategory = new Categories
+            {
+                Id = categories.Count + 1,
+                Name = category.Name,
+                Image = category.Image
+            };
+
+            categories.Add(newCategory);
+
+            var categoryDto = new CategoriesDTO(
+                Id: newCategory.Id,
+                Name: newCategory.Name,
+                Image: newCategory.Image,
+                UrlSlug: newCategory.UrlSlug,
+                Products: newCategory.Products
+            );
+
+            return await Task.FromResult(categoryDto);
         }
 
-        public Task<bool> DeleteCategory(int id)
+        public async Task<bool> DeleteCategory(int id)
         {
-            throw new NotImplementedException();
+            var category = categories.FirstOrDefault(c => c.Id == id);
+
+            if (category == null)
+                return false;
+
+            categories.Remove(category);
+            return await Task.FromResult(true);
         }
 
 

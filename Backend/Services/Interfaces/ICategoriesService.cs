@@ -7,7 +7,7 @@ namespace FreakyFashion.Services.Interfaces
         Task<List<CategoriesDTO>> GetCategories();
         Task<CategoriesDTO?> GetCategoryById(int id);
         Task<CategoriesDTO?> GetCategoryBySlug(string slug);
-        Task<CategoriesDTO> CreateCategory(CategoriesDTO category);// TODO: May need CreateDTO
+        Task<CategoriesDTO> CreateCategory(CreateCategoryDTO category);
         Task<bool> DeleteCategory(int id);
     }
 }

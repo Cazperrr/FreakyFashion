@@ -49,3 +49,24 @@ Accept: application/json
 ### Get Category By Slug
 GET {{FreakyFashion_HostAddress}}/api/Categories/slug=t-shirts
 Accept: application/json
+
+### Create Category
+POST {{FreakyFashion_HostAddress}}/api/Categories/
+Accept: application/json
+Content-type: application/json
+{
+  "name": "T-Shirts",
+  "image": "/images/t-shirt.png"
+}
+
+### Create Category without body
+POST {{FreakyFashion_HostAddress}}/api/Categories/
+Accept: application/json
+Content-type: application/json
+{
+
+}
+
+### Delete Category
+DELETE {{FreakyFashion_HostAddress}}/api/Categories/3
+Accept: application/json

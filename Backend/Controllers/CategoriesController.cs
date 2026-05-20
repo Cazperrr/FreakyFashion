@@ -38,5 +38,28 @@ namespace FreakyFashion.Controllers
 
             return Ok(category);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<CategoriesDTO>> CreateCategory(CreateCategoryDTO categoryDTO)
+        {
+            var createdCategory = await service.CreateCategory(categoryDTO);
+
+            return CreatedAtAction(
+                nameof(GetCategoryById),
+                new { id = createdCategory.Id },
+                createdCategory
+                );
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteCategory(int id)
+        {
+            var result = await service.DeleteCategory(id);
+
+            if (!result)
+                return NotFound();
+
+            return NoContent();
+        }
     }
 }
