@@ -34,7 +34,7 @@ namespace FreakyFashion.Controllers
             var category = await service.GetCategoryBySlug(slug);
 
             if (category == null)
-                return NotFound("Category not found");
+                return NotFound($"Category with slug '{slug}' not found.");
 
             return Ok(category);
         }

@@ -32,12 +32,12 @@ namespace FreakyFashion.Controllers
         [HttpGet("slug={slug}")]
         public async Task<ActionResult<List<ProductsDTO>>> GetProductBySlug(string slug)
         {
-            var products = await service.GetProductBySlug(slug);
+            var product = await service.GetProductBySlug(slug);
 
-            if (!products.Any())
+            if (product == null)
                 return NotFound($"Product with slug '{slug}' not found.");
 
-            return Ok(products);
+            return Ok(product);
         }
 
         [HttpPost]

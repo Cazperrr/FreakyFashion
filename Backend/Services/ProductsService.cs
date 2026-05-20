@@ -72,22 +72,24 @@ namespace FreakyFashion.Services
             return await Task.FromResult(productDTO);
         }
 
-        public async Task<List<ProductsDTO>> GetProductBySlug(string slug)
+        public async Task<ProductsDTO> GetProductBySlug(string slug)
         {
             // TODO: Handle case sensitivity and ensure that the slug is unique for each product
 
-            var result = products
-                .Where(p => p.UrlSlug == slug)
-                .Select(result => new ProductsDTO(
-                    Id: result.Id,
-                    Name: result.Name,
-                    Description: result.Description,
-                    Price: result.Price,
-                    Image: result.Image,
-                    UrlSlug: result.UrlSlug
-                )).ToList();
+            var response = products.FirstOrDefault(p => p.UrlSlug.Equals(slug, StringComparison.OrdinalIgnoreCase));
 
-            return await Task.FromResult(result);
+            if (response == null)
+                return null;
+
+            var productsDTO = new ProductsDTO(
+                Id: response.Id,
+                Name: response.Name,
+                Description: response.Description,
+                Price: response.Price,
+                Image: response.Image,
+                UrlSlug: response.UrlSlug);
+
+            return await Task.FromResult(productsDTO);
         }
 
         public async Task<List<ProductsDTO>> GetProducts()
