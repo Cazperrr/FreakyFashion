@@ -36,3 +36,16 @@ Content-Type: application/json
 ### Delete product
 DELETE {{FreakyFashion_HostAddress}}/api/Products/6
 Accept: application/json
+
+### -------------------------------------------------------------
+### Get All Categories
+GET {{FreakyFashion_HostAddress}}/api/Categories/
+Accept: application/json
+
+### Get Category By Id
+GET {{FreakyFashion_HostAddress}}/api/Categories/1
+Accept: application/json
+
+### Get Category By Slug
+GET {{FreakyFashion_HostAddress}}/api/Categories/slug=t-shirts
+Accept: application/json

@@ -16,5 +16,27 @@ namespace FreakyFashion.Controllers
 
             return Ok(categories);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CategoriesDTO>> GetCategoryById(int id)
+        {
+            var category = await service.GetCategoryById(id);
+
+            if (category == null)
+                return NotFound();
+
+            return Ok(category);
+        }
+
+        [HttpGet("slug={slug}")]
+        public async Task<ActionResult<CategoriesDTO>> GetCategoryBySlug(string slug)
+        {
+            var category = await service.GetCategoryBySlug(slug);
+
+            if (category == null)
+                return NotFound("Category not found");
+
+            return Ok(category);
+        }
     }
 }

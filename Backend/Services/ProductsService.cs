@@ -74,6 +74,8 @@ namespace FreakyFashion.Services
 
         public async Task<List<ProductsDTO>> GetProductBySlug(string slug)
         {
+            // TODO: Handle case sensitivity and ensure that the slug is unique for each product
+
             var result = products
                 .Where(p => p.UrlSlug == slug)
                 .Select(result => new ProductsDTO(
