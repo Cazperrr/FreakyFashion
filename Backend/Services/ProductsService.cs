@@ -9,9 +9,11 @@ namespace FreakyFashion.Services
     public class ProductsService : IProductsService
     {
         private readonly AppDbContext _context;
-        public ProductsService(AppDbContext context)
+        private readonly ISlugService _slugService;
+        public ProductsService(AppDbContext context, ISlugService slugService)
         {
             _context = context;
+            _slugService = slugService;
         }
 
         //static List<Products> products = new List<Products>
@@ -31,9 +33,9 @@ namespace FreakyFashion.Services
                 Description = productDTO.Description,
                 Price = productDTO.Price,
                 Image = productDTO.Image,
-                UrlSlug = productDTO.UrlSlug,
+                UrlSlug = await GenerateUniqueProductSlug(productDTO.Name),
                 CategoryId = productDTO.CategoryId
-                // TODO: Generate UrlSlug from the product name and ensure it's unique
+                // TODO: Ensure the generated UrlSlug is unique
             };
 
             _context.Products.Add(product);
@@ -110,6 +112,20 @@ namespace FreakyFashion.Services
             )).ToListAsync();
 
             return await Task.FromResult(response);
+        }
+
+        public async Task<string> GenerateUniqueProductSlug(string name)
+        {
+            string baseSlug = _slugService.GenerateSlug(name);
+            string uniqueSlug = baseSlug;
+            int counter = 1;
+
+            while (await _context.Products.AnyAsync(p => p.UrlSlug == uniqueSlug))
+            {
+                uniqueSlug = $"{baseSlug}-{counter}";
+                counter++;
+            }
+            return uniqueSlug;
         }
     }
 }

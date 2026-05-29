@@ -9,5 +9,6 @@ namespace FreakyFashion.Services.Interfaces
         Task<CategoriesDTO?> GetCategoryBySlug(string slug);
         Task<CategoriesDTO> CreateCategory(CreateCategoryDTO category);
         Task<bool> DeleteCategory(int id);
+        Task<string> GenerateUniqueCategorySlug(string name);
     }
 }

@@ -9,10 +9,12 @@ namespace FreakyFashion.Services
     public class CategoriesService : ICategoriesService
     {
         private readonly AppDbContext _context;
+        private readonly ISlugService _slugService;
 
-        public CategoriesService(AppDbContext context)
+        public CategoriesService(AppDbContext context, ISlugService slugService)
         {
             _context = context;
+            _slugService = slugService;
         }
 
         //static List<Categories> categories = new List<Categories>
@@ -101,7 +103,20 @@ namespace FreakyFashion.Services
             return true;
         }
 
+        public async Task<string> GenerateUniqueCategorySlug(string name)
+        {
+            string baseSlug = _slugService.GenerateSlug(name);
+            string slug = baseSlug;
+            int counter = 1;
 
+            while (await _context.Categories.AnyAsync(c => c.UrlSlug == slug))
+            {
+                slug = $"{baseSlug}-{counter}";
+                counter++;
+            }
+
+            return slug;
+        }
 
     }
 }

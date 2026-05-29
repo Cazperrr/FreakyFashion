@@ -11,6 +11,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IProductsService, ProductsService>();
 builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<ISlugService, SlugService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(

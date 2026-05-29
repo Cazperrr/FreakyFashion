@@ -9,5 +9,6 @@ namespace FreakyFashion.Services.Interfaces
         Task<ProductsDTO> GetProductBySlug(string slug);
         Task<ProductsDTO> CreateProduct(CreateProductDTO product);
         Task<bool> DeleteProduct(int id);
+        Task<string> GenerateUniqueProductSlug(string name);
     }
 }
