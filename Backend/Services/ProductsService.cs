@@ -24,6 +24,13 @@ namespace FreakyFashion.Services
         //    new Products { Id = 4, Name = "Hoodie", Description = "A warm Hoodie", Price = 89.99m, Image = "hoodie.jpg", UrlSlug = "hoodie", CategoryId = 4 }
         //};
 
+        //"name": "T-Shirt",
+    //"Urlslug": "t-shirt",
+    //"Description": "Lorem ipsum dolor",
+    //"Price": 199,
+    //"Image": "/images/t-shirt.png",
+    //"CategoryId": 1
+
         public async Task<ProductsDTO> CreateProduct(CreateProductDTO productDTO)
         {
 

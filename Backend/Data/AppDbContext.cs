@@ -11,5 +11,12 @@ namespace FreakyFashion.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Products>()
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
+        }
     }
 }
