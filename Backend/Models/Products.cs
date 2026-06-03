@@ -11,5 +11,6 @@ namespace FreakyFashion.Models
         public string? Image { get; set; }
         public string? UrlSlug { get; set; }
         public int CategoryId { get; set; }
+        public Categories Category { get; set; } = null!;
     }
 }
