@@ -16,21 +16,6 @@ namespace FreakyFashion.Services
             _slugService = slugService;
         }
 
-        //static List<Products> products = new List<Products>
-        //{
-        //    new Products { Id = 1, Name = "T-Shirt", Description = "A comfortable t-shirt", Price = 19.99m, Image = "tshirt.jpg", UrlSlug = "t-shirt", CategoryId = 1 },
-        //    new Products { Id = 2, Name = "Jeans", Description = "Stylish jeans", Price = 49.99m, Image = "jeans.jpg", UrlSlug = "jeans", CategoryId = 2 },
-        //    new Products { Id = 3, Name = "Sneakers", Description = "Trendy sneakers", Price = 89.99m, Image = "sneakers.jpg", UrlSlug = "sneakers", CategoryId = 3 },
-        //    new Products { Id = 4, Name = "Hoodie", Description = "A warm Hoodie", Price = 89.99m, Image = "hoodie.jpg", UrlSlug = "hoodie", CategoryId = 4 }
-        //};
-
-        //"name": "T-Shirt",
-    //"Urlslug": "t-shirt",
-    //"Description": "Lorem ipsum dolor",
-    //"Price": 199,
-    //"Image": "/images/t-shirt.png",
-    //"CategoryId": 1
-
         public async Task<ProductsDTO> CreateProduct(CreateProductDTO productDTO)
         {
 
@@ -42,7 +27,6 @@ namespace FreakyFashion.Services
                 Image = productDTO.Image,
                 UrlSlug = await GenerateUniqueProductSlug(productDTO.Name),
                 CategoryId = productDTO.CategoryId
-                // TODO: Ensure the generated UrlSlug is unique
             };
 
             _context.Products.Add(product);
@@ -91,9 +75,7 @@ namespace FreakyFashion.Services
 
         public async Task<ProductsDTO> GetProductBySlug(string slug)
         {
-            // TODO: Handle case sensitivity and ensure that the slug is unique for each product
-
-            var response = await _context.Products.FirstOrDefaultAsync(p => p.UrlSlug.Equals(slug, StringComparison.OrdinalIgnoreCase));
+            var response = await _context.Products.FirstOrDefaultAsync(p => p.UrlSlug == slug.ToLower());
 
             if (response == null)
                 return null;

@@ -17,12 +17,11 @@ POST {{FreakyFashion_HostAddress}}/api/Products/
 Accept: application/json
 Content-Type: application/json
 {
-    "name": "T-Shirt",
-    "Urlslug": "t-shirt",
-    "Description": "Lorem ipsum dolor",
-    "Price": 199,
-    "Image": "/images/t-shirt.png",
-    "CategoryId": 1
+    "name": "Yellow Cap",
+    "Description": "Very nice cap",
+    "Price": 49,
+    "Image": "/images/yellow-cap.png",
+    "CategoryId": 8
 }
 
 ### Create without body
@@ -34,7 +33,7 @@ Content-Type: application/json
 }
 
 ### Delete product
-DELETE {{FreakyFashion_HostAddress}}/api/Products/6
+DELETE {{FreakyFashion_HostAddress}}/api/Products/3
 Accept: application/json
 
 ### -------------------------------------------------------------
@@ -43,7 +42,7 @@ GET {{FreakyFashion_HostAddress}}/api/Categories/
 Accept: application/json
 
 ### Get Category By Id
-GET {{FreakyFashion_HostAddress}}/api/Categories/1
+GET {{FreakyFashion_HostAddress}}/api/Categories/2
 Accept: application/json
 
 ### Get Category By Slug
@@ -55,8 +54,8 @@ POST {{FreakyFashion_HostAddress}}/api/Categories/
 Accept: application/json
 Content-type: application/json
 {
-  "name": "T-Shirts",
-  "image": "/images/t-shirt.png"
+  "name": "Hats",
+  "image": "/images/hats.jpg"
 }
 
 ### Create Category without body
@@ -68,5 +67,5 @@ Content-type: application/json
 }
 
 ### Delete Category
-DELETE {{FreakyFashion_HostAddress}}/api/Categories/3
+DELETE {{FreakyFashion_HostAddress}}/api/Categories/8
 Accept: application/json

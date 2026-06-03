@@ -1,4 +1,5 @@
-﻿using FreakyFashion.Data;
+﻿using Azure;
+using FreakyFashion.Data;
 using FreakyFashion.DTOs;
 using FreakyFashion.Models;
 using FreakyFashion.Services.Interfaces;
@@ -17,30 +18,32 @@ namespace FreakyFashion.Services
             _slugService = slugService;
         }
 
-        //static List<Categories> categories = new List<Categories>
-        //{
-        //    new Categories { Id = 1, Name = "T-Shirts", Image = "tshirt.jpg", UrlSlug = "t-shirts" },
-        //    new Categories { Id = 2, Name = "Pants", Image = "pants.jpg", UrlSlug = "pants" },
-        //    new Categories { Id = 3, Name = "Shoes", Image = "shoes.jpg", UrlSlug = "shoes" },
-        //    new Categories { Id = 4, Name = "Hoodies", Image = "hoodies.jpg", UrlSlug = "hoodies" }
-        //};
-
         public async Task<List<CategoriesDTO>> GetCategories()
         {
-            var response = await _context.Categories.Select(c => new CategoriesDTO(
+            var response = await _context.Categories
+                .Select(c => new CategoriesDTO(
                 Id: c.Id,
                 Name: c.Name,
                 Image: c.Image,
                 UrlSlug: c.UrlSlug,
-                Products: c.Products
+                Products: c.Products.Select(p => new ProductsDTO(
+                    Id: p.Id,
+                    Name: p.Name,
+                    Description: p.Description,
+                    Price: p.Price,
+                    Image: p.Image,
+                    UrlSlug: p.UrlSlug
+                    )).ToList()
             )).ToListAsync();
 
-            return await Task.FromResult(response);
+            return response;
         }
 
         public async Task<CategoriesDTO?> GetCategoryById(int id)
         {
-            var response = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            var response = await _context.Categories
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (response == null)
                 return null;
@@ -50,13 +53,21 @@ namespace FreakyFashion.Services
                 Name: response.Name,
                 Image: response.Image,
                 UrlSlug: response.UrlSlug,
-                Products: response.Products
+                Products: response.Products.Select(p => new ProductsDTO(
+                    Id: p.Id,
+                    Name: p.Name,
+                    Description: p.Description,
+                    Price: p.Price,
+                    Image: p.Image,
+                    UrlSlug: p.UrlSlug
+                    )).ToList()
             );
         }
         public async Task<CategoriesDTO> GetCategoryBySlug(string slug)
         {
-            // TODO: Handle case sensitivity and ensure that the slug is unique for each product
-            var response = await _context.Categories.FirstOrDefaultAsync(c => c.UrlSlug.Equals(slug, StringComparison.OrdinalIgnoreCase));
+            var response = await _context.Categories
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.UrlSlug == slug.ToLower());
 
             if (response == null)
                 return null;
@@ -66,7 +77,14 @@ namespace FreakyFashion.Services
                 Name: response.Name,
                 Image: response.Image,
                 UrlSlug: response.UrlSlug,
-                Products: response.Products
+                Products: response.Products.Select(p => new ProductsDTO(
+                    Id: p.Id,
+                    Name: p.Name,
+                    Description: p.Description,
+                    Price: p.Price,
+                    Image: p.Image,
+                    UrlSlug: p.UrlSlug
+                    )).ToList()
             );
         }
 
@@ -75,8 +93,8 @@ namespace FreakyFashion.Services
             var category = new Categories
             {
                 Name = categoryDTO.Name,
-                Image = categoryDTO.Image
-                // TODO: Generate UrlSlug from Name, e.g., by replacing spaces with hyphens and converting to lowercase
+                Image = categoryDTO.Image,
+                UrlSlug = await GenerateUniqueCategorySlug(categoryDTO.Name)
             };
 
             _context.Categories.Add(category);
@@ -87,7 +105,7 @@ namespace FreakyFashion.Services
                 Name: category.Name,
                 Image: category.Image,
                 UrlSlug: category.UrlSlug,
-                Products: category.Products
+                Products: []
             );
         }
 
