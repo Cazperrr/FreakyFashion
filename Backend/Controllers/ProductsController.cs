@@ -45,6 +45,9 @@ namespace FreakyFashion.Controllers
         {
             var createdProduct = await service.CreateProduct(productDTO);
 
+            if (createdProduct == null)
+                return BadRequest("Category with the specified ID does not exist.");
+
             return CreatedAtAction(
                 nameof(GetProductById),
                 new { id = createdProduct.Id },

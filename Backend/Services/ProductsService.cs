@@ -18,6 +18,10 @@ namespace FreakyFashion.Services
 
         public async Task<ProductsDTO> CreateProduct(CreateProductDTO productDTO)
         {
+            var categoryExists = await _context.Categories.AnyAsync(c => c.Id == productDTO.CategoryId);
+
+            if (!categoryExists)
+                return null;
 
             var product = new Products
             {
