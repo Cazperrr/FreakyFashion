@@ -21,7 +21,7 @@ Content-Type: application/json
     "Description": "Very nice cap",
     "Price": 49,
     "Image": "/images/yellow-cap.png",
-    "CategoryId": 1
+    "CategoryId": 2
 }
 
 ### Create without body
