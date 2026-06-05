@@ -33,7 +33,9 @@ steps:
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory) --no-build'
     zipAfterPublish: true
 
+#Deploy
 - task: AzureWebApp@1
+  displayName: Deploy to WebApp
   inputs:
     azureSubscription: 'Azure-ServiceConnection'
     appType: 'webAppLinux'
