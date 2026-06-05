@@ -5,11 +5,11 @@ GET {{FreakyFashion_HostAddress}}/api/Products/
 Accept: application/json
 
 ### Get product by Id
-GET {{FreakyFashion_HostAddress}}/api/Products/1
+GET {{FreakyFashion_HostAddress}}/api/Products/4
 Accept: application/json
 
 ### Get product by slug
-GET {{FreakyFashion_HostAddress}}/api/Products/slug=t-shirt
+GET {{FreakyFashion_HostAddress}}/api/Products/slug=yellow-cap
 Accept: application/json
 
 ### Create a new product
@@ -17,11 +17,11 @@ POST {{FreakyFashion_HostAddress}}/api/Products/
 Accept: application/json
 Content-Type: application/json
 {
-    "name": "Yellow Cap",
-    "Description": "Very nice cap",
-    "Price": 49,
-    "Image": "/images/yellow-cap.png",
-    "CategoryId": 2
+    "name": "Gray Hoodie",
+    "Description": "A warm gray hoodie",
+    "Price": 199,
+    "Image": "/images/gray-hoodie.png",
+    "CategoryId": 5
 }
 
 ### Create without body
@@ -33,7 +33,7 @@ Content-Type: application/json
 }
 
 ### Delete product
-DELETE {{FreakyFashion_HostAddress}}/api/Products/3
+DELETE {{FreakyFashion_HostAddress}}/api/Products/6
 Accept: application/json
 
 ### -------------------------------------------------------------
@@ -54,8 +54,8 @@ POST {{FreakyFashion_HostAddress}}/api/Categories/
 Accept: application/json
 Content-type: application/json
 {
-  "name": "Hats",
-  "image": "/images/hats.jpg"
+  "name": "Hoodies",
+  "image": "/images/hoodies.jpg"
 }
 
 ### Create Category without body
