@@ -1,0 +1,40 @@
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+#Installera beroenden
+- task: DotNetCoreCLI@2
+  displayName: Restore dependencies
+  inputs:
+    command: 'restore'
+    projects: '**/*.slnx'
+
+#Bygg projektet
+- task: DotNetCoreCLI@2
+  displayName: Build project
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration Release'
+
+#Publicera projektet
+- task: DotNetCoreCLI@2
+  displayName: Publish project
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory) --no-build'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure-ServiceConnection'
+    appType: 'webAppLinux'
+    appName: 'freakyfashion-webapp'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
